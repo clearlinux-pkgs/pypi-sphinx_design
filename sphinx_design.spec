@@ -4,7 +4,7 @@
 #
 Name     : sphinx_design
 Version  : 0.0.13
-Release  : 1
+Release  : 2
 URL      : https://files.pythonhosted.org/packages/44/6d/0b36d5fa3c422288bfd1ff28f4f98df9fb36b31e072c19a275f759876c62/sphinx_design-0.0.13.tar.gz
 Source0  : https://files.pythonhosted.org/packages/44/6d/0b36d5fa3c422288bfd1ff28f4f98df9fb36b31e072c19a275f759876c62/sphinx_design-0.0.13.tar.gz
 Summary  : A sphinx extension for designing beautiful, view size responsive web components.
