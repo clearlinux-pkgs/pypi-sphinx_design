@@ -4,15 +4,17 @@
 #
 Name     : sphinx_design
 Version  : 0.0.13
-Release  : 2
+Release  : 3
 URL      : https://files.pythonhosted.org/packages/44/6d/0b36d5fa3c422288bfd1ff28f4f98df9fb36b31e072c19a275f759876c62/sphinx_design-0.0.13.tar.gz
 Source0  : https://files.pythonhosted.org/packages/44/6d/0b36d5fa3c422288bfd1ff28f4f98df9fb36b31e072c19a275f759876c62/sphinx_design-0.0.13.tar.gz
 Summary  : A sphinx extension for designing beautiful, view size responsive web components.
 Group    : Development/Tools
 License  : MIT
+Requires: sphinx_design-license = %{version}-%{release}
 Requires: sphinx_design-python = %{version}-%{release}
 Requires: sphinx_design-python3 = %{version}-%{release}
 BuildRequires : buildreq-distutils3
+BuildRequires : pypi(importlib_resources)
 BuildRequires : pypi(setuptools)
 BuildRequires : pypi(sphinx)
 BuildRequires : pypi(wheel)
@@ -23,6 +25,14 @@ BuildRequires : pypi(wheel)
         [![PyPI][pypi-badge]][pypi-link]
         
         A sphinx extension for designing beautiful, view size responsive web components.
+
+%package license
+Summary: license components for the sphinx_design package.
+Group: Default
+
+%description license
+license components for the sphinx_design package.
+
 
 %package python
 Summary: python components for the sphinx_design package.
@@ -38,6 +48,7 @@ Summary: python3 components for the sphinx_design package.
 Group: Default
 Requires: python3-core
 Provides: pypi(sphinx_design)
+Requires: pypi(importlib_resources)
 Requires: pypi(sphinx)
 
 %description python3
@@ -53,7 +64,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1637595159
+export SOURCE_DATE_EPOCH=1641427681
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -68,13 +79,21 @@ python3 -m build --wheel --skip-dependency-check --no-isolation
 %install
 export MAKEFLAGS=%{?_smp_mflags}
 rm -rf %{buildroot}
-python3 -m install --destdir=%{buildroot} dist/*.whl
+mkdir -p %{buildroot}/usr/share/package-licenses/sphinx_design
+cp %{_builddir}/sphinx_design-0.0.13/LICENSE %{buildroot}/usr/share/package-licenses/sphinx_design/f341f3903e7e7e8c1e0369a22921ff11c1ef261d
+cp %{_builddir}/sphinx_design-0.0.13/sphinx_design/compiled/octicon_LICENSE %{buildroot}/usr/share/package-licenses/sphinx_design/5c0e418ff5750461e481972fdc40ecb88ce84b26
+pip install --root=%{buildroot} --no-deps --ignore-installed dist/*.whl
 echo ----[ mark ]----
 cat %{buildroot}/usr/lib/python3*/site-packages/*/requires.txt || :
 echo ----[ mark ]----
 
 %files
 %defattr(-,root,root,-)
+
+%files license
+%defattr(0644,root,root,0755)
+/usr/share/package-licenses/sphinx_design/5c0e418ff5750461e481972fdc40ecb88ce84b26
+/usr/share/package-licenses/sphinx_design/f341f3903e7e7e8c1e0369a22921ff11c1ef261d
 
 %files python
 %defattr(-,root,root,-)
