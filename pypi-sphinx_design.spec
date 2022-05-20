@@ -4,12 +4,12 @@
 #
 Name     : pypi-sphinx_design
 Version  : 0.1.0
-Release  : 5
+Release  : 6
 URL      : https://files.pythonhosted.org/packages/db/3f/6f31a02665bb9d84100f53ac85a5a603f80f311796115c9092e79e2e15d7/sphinx_design-0.1.0.tar.gz
 Source0  : https://files.pythonhosted.org/packages/db/3f/6f31a02665bb9d84100f53ac85a5a603f80f311796115c9092e79e2e15d7/sphinx_design-0.1.0.tar.gz
 Summary  : A sphinx extension for designing beautiful, view size responsive web components.
 Group    : Development/Tools
-License  : MIT
+License  : Apache-2.0 MIT
 Requires: pypi-sphinx_design-license = %{version}-%{release}
 Requires: pypi-sphinx_design-python = %{version}-%{release}
 Requires: pypi-sphinx_design-python3 = %{version}-%{release}
@@ -58,13 +58,16 @@ python3 components for the pypi-sphinx_design package.
 %prep
 %setup -q -n sphinx_design-0.1.0
 cd %{_builddir}/sphinx_design-0.1.0
+pushd ..
+cp -a sphinx_design-0.1.0 buildavx2
+popd
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1650554304
+export SOURCE_DATE_EPOCH=1653060260
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -75,23 +78,43 @@ export FFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=auto "
 export CXXFLAGS="$CXXFLAGS -O3 -ffat-lto-objects -flto=auto "
 export MAKEFLAGS=%{?_smp_mflags}
 python3 -m build --wheel --skip-dependency-check --no-isolation
+pushd ../buildavx2/
+export CFLAGS="$CFLAGS -m64 -march=x86-64-v3 -Wl,-z,x86-64-v3 "
+export CXXFLAGS="$CXXFLAGS -m64 -march=x86-64-v3 -Wl,-z,x86-64-v3 "
+export FFLAGS="$FFLAGS -m64 -march=x86-64-v3 -Wl,-z,x86-64-v3 "
+export FCFLAGS="$FCFLAGS -m64 -march=x86-64-v3 "
+export LDFLAGS="$LDFLAGS -m64 -march=x86-64-v3 "
+python3 -m build --wheel --skip-dependency-check --no-isolation
+
+popd
 
 %install
 export MAKEFLAGS=%{?_smp_mflags}
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/pypi-sphinx_design
 cp %{_builddir}/sphinx_design-0.1.0/LICENSE %{buildroot}/usr/share/package-licenses/pypi-sphinx_design/f341f3903e7e7e8c1e0369a22921ff11c1ef261d
+cp %{_builddir}/sphinx_design-0.1.0/sphinx_design/compiled/material-icons_LICENSE %{buildroot}/usr/share/package-licenses/pypi-sphinx_design/5b3d19a89a37aa599ae2da88c47b54bd7193c6dd
 cp %{_builddir}/sphinx_design-0.1.0/sphinx_design/compiled/octicon_LICENSE %{buildroot}/usr/share/package-licenses/pypi-sphinx_design/5c0e418ff5750461e481972fdc40ecb88ce84b26
 pip install --root=%{buildroot} --no-deps --ignore-installed dist/*.whl
 echo ----[ mark ]----
 cat %{buildroot}/usr/lib/python3*/site-packages/*/requires.txt || :
 echo ----[ mark ]----
+pushd ../buildavx2/
+export CFLAGS="$CFLAGS -m64 -march=x86-64-v3 -Wl,-z,x86-64-v3 "
+export CXXFLAGS="$CXXFLAGS -m64 -march=x86-64-v3 -Wl,-z,x86-64-v3 "
+export FFLAGS="$FFLAGS -m64 -march=x86-64-v3 -Wl,-z,x86-64-v3 "
+export FCFLAGS="$FCFLAGS -m64 -march=x86-64-v3 "
+export LDFLAGS="$LDFLAGS -m64 -march=x86-64-v3 "
+pip install --root=%{buildroot}-v3 --no-deps --ignore-installed dist/*.whl
+popd
+/usr/bin/elf-move.py avx2 %{buildroot}-v3 %{buildroot}/usr/share/clear/optimized-elf/ %{buildroot}/usr/share/clear/filemap/filemap-%{name}
 
 %files
 %defattr(-,root,root,-)
 
 %files license
 %defattr(0644,root,root,0755)
+/usr/share/package-licenses/pypi-sphinx_design/5b3d19a89a37aa599ae2da88c47b54bd7193c6dd
 /usr/share/package-licenses/pypi-sphinx_design/5c0e418ff5750461e481972fdc40ecb88ce84b26
 /usr/share/package-licenses/pypi-sphinx_design/f341f3903e7e7e8c1e0369a22921ff11c1ef261d
 
