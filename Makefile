@@ -1,5 +1,5 @@
 PKG_NAME := pypi-sphinx_design
-URL = https://files.pythonhosted.org/packages/7b/28/0eb39f87239acf377db5f08cf2f2b27d43c3371624a4cca128dfe952aa10/sphinx_design-0.3.0.tar.gz
+URL = https://files.pythonhosted.org/packages/86/7b/f61142380242b5cd192157fe4a626d92b0a74874f41ba9dc52d406ba2060/sphinx_design-0.4.1.tar.gz
 ARCHIVES = 
 
 include ../common/Makefile.common
