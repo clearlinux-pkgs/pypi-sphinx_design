@@ -4,10 +4,10 @@
 # Using build pattern: pyproject
 #
 Name     : pypi-sphinx_design
-Version  : 0.4.1
-Release  : 17
-URL      : https://files.pythonhosted.org/packages/86/7b/f61142380242b5cd192157fe4a626d92b0a74874f41ba9dc52d406ba2060/sphinx_design-0.4.1.tar.gz
-Source0  : https://files.pythonhosted.org/packages/86/7b/f61142380242b5cd192157fe4a626d92b0a74874f41ba9dc52d406ba2060/sphinx_design-0.4.1.tar.gz
+Version  : 0.5.0
+Release  : 18
+URL      : https://files.pythonhosted.org/packages/fd/d0/62a7cee178d30f7217c4badea17eeca020801c0053773098d9ff65636a60/sphinx_design-0.5.0.tar.gz
+Source0  : https://files.pythonhosted.org/packages/fd/d0/62a7cee178d30f7217c4badea17eeca020801c0053773098d9ff65636a60/sphinx_design-0.5.0.tar.gz
 Summary  : A sphinx extension for designing beautiful, view size responsive web components.
 Group    : Development/Tools
 License  : Apache-2.0 MIT
@@ -60,10 +60,10 @@ python3 components for the pypi-sphinx_design package.
 
 
 %prep
-%setup -q -n sphinx_design-0.4.1
-cd %{_builddir}/sphinx_design-0.4.1
+%setup -q -n sphinx_design-0.5.0
+cd %{_builddir}/sphinx_design-0.5.0
 pushd ..
-cp -a sphinx_design-0.4.1 buildavx2
+cp -a sphinx_design-0.5.0 buildavx2
 popd
 
 %build
@@ -71,15 +71,15 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1681406051
+export SOURCE_DATE_EPOCH=1690471977
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
-export CFLAGS="$CFLAGS -O3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz "
-export FCFLAGS="$FFLAGS -O3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz "
-export FFLAGS="$FFLAGS -O3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz "
-export CXXFLAGS="$CXXFLAGS -O3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz "
+export CFLAGS="$CFLAGS -O3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
+export FCFLAGS="$FFLAGS -O3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
+export FFLAGS="$FFLAGS -O3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
+export CXXFLAGS="$CXXFLAGS -O3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
 export MAKEFLAGS=%{?_smp_mflags}
 pypi-dep-fix.py . sphinx
 python3 -m build --wheel --skip-dependency-check --no-isolation
@@ -98,7 +98,6 @@ popd
 export MAKEFLAGS=%{?_smp_mflags}
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/pypi-sphinx_design
-cp %{_builddir}/sphinx_design-%{version}/LICENSE %{buildroot}/usr/share/package-licenses/pypi-sphinx_design/f341f3903e7e7e8c1e0369a22921ff11c1ef261d || :
 cp %{_builddir}/sphinx_design-%{version}/sphinx_design/compiled/material-icons_LICENSE %{buildroot}/usr/share/package-licenses/pypi-sphinx_design/dfda1f5b7ba837492d7fbf2b731edc313edd0c5e || :
 cp %{_builddir}/sphinx_design-%{version}/sphinx_design/compiled/octicon_LICENSE %{buildroot}/usr/share/package-licenses/pypi-sphinx_design/5c0e418ff5750461e481972fdc40ecb88ce84b26 || :
 pip install --root=%{buildroot} --no-deps --ignore-installed dist/*.whl
@@ -123,7 +122,6 @@ popd
 %defattr(0644,root,root,0755)
 /usr/share/package-licenses/pypi-sphinx_design/5c0e418ff5750461e481972fdc40ecb88ce84b26
 /usr/share/package-licenses/pypi-sphinx_design/dfda1f5b7ba837492d7fbf2b731edc313edd0c5e
-/usr/share/package-licenses/pypi-sphinx_design/f341f3903e7e7e8c1e0369a22921ff11c1ef261d
 
 %files python
 %defattr(-,root,root,-)
