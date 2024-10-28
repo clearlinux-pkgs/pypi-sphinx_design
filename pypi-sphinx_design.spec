@@ -7,7 +7,7 @@
 #
 Name     : pypi-sphinx_design
 Version  : 0.6.1
-Release  : 22
+Release  : 23
 URL      : https://files.pythonhosted.org/packages/2b/69/b34e0cb5336f09c6866d53b4a19d76c227cdec1bbc7ac4de63ca7d58c9c7/sphinx_design-0.6.1.tar.gz
 Source0  : https://files.pythonhosted.org/packages/2b/69/b34e0cb5336f09c6866d53b4a19d76c227cdec1bbc7ac4de63ca7d58c9c7/sphinx_design-0.6.1.tar.gz
 Summary  : A sphinx extension for designing beautiful, view size responsive web components.
